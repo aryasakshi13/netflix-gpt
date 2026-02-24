@@ -2,6 +2,10 @@
 
 -Create react app 
 - Configured tailwindCss
+-Implement Header 
+-Routing
+-Sign up and Sign in form
+-
 
 
 # Features 
