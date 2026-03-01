@@ -5,7 +5,8 @@
 -Implement Header 
 -Routing
 -Sign up and Sign in form
--
+- form validation 
+- Useref hook 
 
 
 # Features 
@@ -23,5 +24,6 @@
    - Search bar 
    - Movie Suggestions
 
+# for building big form in Application ALways use formic 
 
       

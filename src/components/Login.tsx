@@ -1,15 +1,59 @@
 import React, { useRef, useState } from 'react'
 import Header from './Header'
-import { checkValidateData } from '../utils/Validate';
+import { checkValidateData } from '../utils/validate';
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { auth } from "../utils/firebase";
+
 
 const Login = () => {
    const [IsSignInForm, setIsSignInForm] = useState(true);
+   const[errormessage, seterrormessage] = useState<string | null>(null);
 
-   const email = useRef(null);
-   const password = useRef(null);
-  const handleButtonClick = () =>{
+   const name = useRef(null);
+   const email = useRef<HTMLInputElement>(null);
+   const password = useRef<HTMLInputElement>(null);
+   const handleButtonClick = () =>{
+    if (!email.current || !password.current) return;
     // validate the form data
-    // checkValidateData()
+    const message = checkValidateData(email.current.value,password.current.value)
+      seterrormessage(message);
+       
+      if(message) return;
+
+      if(!IsSignInForm){
+        // Sign Up Logic 
+        createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+          .then((userCredential) => {
+      
+          const user = userCredential.user;
+          console.log(user)
+    
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          seterrormessage(errorCode + "-" + errorMessage);
+          // ..
+        });
+      }
+       else{
+            // Sign in 
+         signInWithEmailAndPassword(auth,  email.current.value, password.current.value)
+            .then((userCredential) => {
+        // Signed in 
+          const user = userCredential.user;
+          console.log(user);
+        // ...
+      })
+        .catch((error) => {
+          const errorCode = error.code;
+            const errorMessage = error.message;
+            seterrormessage(errorCode + "-" + errorMessage);
+
+        });
+        }
+
+
   }
 
   const toggleSignInForm = () =>{
@@ -35,10 +79,11 @@ const Login = () => {
         placeholder='Email Address' 
         className='p-4 my-4 w-full bg-gray-700'/>
         <input 
-        type ="text" 
+        type ="password" 
         ref={password}
         placeholder='Password' 
         className='p-4 my-4 w-full  bg-gray-700 '/>
+        <p className='text-red-700 font-bold text-lg p-2'>{errormessage}</p>
         <button className='p-4 my-4 bg-red-700 text-white justify-center w-full rounded-lg' onClick={handleButtonClick}>{IsSignInForm?"Sign In":"Sign Up"}</button>
         <p className='py-4 cursor-pointer' onClick={toggleSignInForm}>{IsSignInForm? "New on Netflix? Sign Up Now":"Already registered? Sign In now"}</p>
       </form>
