@@ -1,15 +1,19 @@
 import React, { useRef, useState } from 'react'
 import Header from './Header'
 import { checkValidateData } from '../utils/validate';
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
 import { auth } from "../utils/firebase";
-
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 
 const Login = () => {
    const [IsSignInForm, setIsSignInForm] = useState(true);
    const[errormessage, seterrormessage] = useState<string | null>(null);
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
 
-   const name = useRef(null);
+   const name = useRef<HTMLInputElement>(null);
    const email = useRef<HTMLInputElement>(null);
    const password = useRef<HTMLInputElement>(null);
    const handleButtonClick = () =>{
@@ -22,11 +26,40 @@ const Login = () => {
 
       if(!IsSignInForm){
         // Sign Up Logic 
-        createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+        createUserWithEmailAndPassword(
+          auth, 
+          email.current.value, 
+          password.current.value
+        )
           .then((userCredential) => {
-      
           const user = userCredential.user;
-          console.log(user)
+           if(!name.current) return ;
+
+          updateProfile(user, {
+          displayName: name.current.value, 
+          photoURL: "https://lh3.google.com/u/0/ogw/AF2bZyhubAaFH8PS0A1rFN49QA4bepIuKZUhZmpNTeXSn5-IcA=s64-c-mo",
+           })
+           .then(() => {
+            const user = auth.currentUser
+            if(user){
+            const {uid, email, displayName, photoURL}= user;
+            dispatch(addUser({
+              uid: user.uid,
+              email: user.email,
+              displayName: name.current?.value,
+              photoURL: "https://lh3.google.com/u/0/ogw/AF2bZyhubAaFH8PS0A1rFN49QA4bepIuKZUhZmpNTeXSn5-IcA=s64-c-mo"
+            }));
+            }
+            navigate("/browse");
+          })
+          .catch((error) => {
+            // An error occurred
+             seterrormessage(error.message);
+          });
+
+          console.log("hooooooo",user);
+          setIsSignInForm(true);
+          // navigate("/");
     
         })
         .catch((error) => {
@@ -38,11 +71,16 @@ const Login = () => {
       }
        else{
             // Sign in 
-         signInWithEmailAndPassword(auth,  email.current.value, password.current.value)
+         signInWithEmailAndPassword(
+          auth,  
+          email.current.value, 
+          password.current.value
+        )
             .then((userCredential) => {
         // Signed in 
           const user = userCredential.user;
-          console.log(user);
+          console.log("haaaaaaa",user);
+          navigate("/browse");
         // ...
       })
         .catch((error) => {
@@ -72,7 +110,7 @@ const Login = () => {
         onSubmit={(e) =>e.preventDefault()}
          className='absolute w-3/12 p-12 bg-black my-20 mx-auto left-0 right-0 text-white rounded-lg bg-opacity-70'>
         <h1 className='py-4 text-white text-3xl'>{IsSignInForm ?"Sign In":"Sign Up"}</h1>
-        {!IsSignInForm && <input type ="text" placeholder="name" className='p-4 my-4 w-full bg-gray-700'/>}
+        {!IsSignInForm && <input type ="text" ref={name} placeholder="Name" className='p-4 my-4 w-full bg-gray-700'/>}
         <input 
         type ="text"
         ref={email}
