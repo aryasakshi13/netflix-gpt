@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import Header from './Header';
+import { USER_AVTAR } from '../utils/constants';
 
 const Login = () => {
    const [IsSignInForm, setIsSignInForm] = useState(true);
@@ -38,7 +39,7 @@ const Login = () => {
            
           updateProfile(user, {
           displayName: name.current?.value || "", 
-          photoURL: "https://lh3.google.com/u/0/ogw/AF2bZyhubAaFH8PS0A1rFN49QA4bepIuKZUhZmpNTeXSn5-IcA=s64-c-mo",
+          photoURL: USER_AVTAR
            })
            .then(() => {
              const user = auth.currentUser
@@ -48,7 +49,7 @@ const Login = () => {
               uid: uid,
               email: email,
               displayName: displayName,
-              photoURL: "https://lh3.google.com/u/0/ogw/AF2bZyhubAaFH8PS0A1rFN49QA4bepIuKZUhZmpNTeXSn5-IcA=s64-c-mo"
+              photoURL: photoURL
             }));
           }
           // //   //  navigate("/browse");
@@ -93,7 +94,7 @@ const Login = () => {
         }
 
 
-  }
+  };
 
   const toggleSignInForm = () =>{
     setIsSignInForm(!IsSignInForm);
