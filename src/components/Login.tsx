@@ -1,16 +1,17 @@
 import React, { useRef, useState } from 'react'
-import Header from './Header'
+
 import { checkValidateData } from '../utils/validate';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import Header from './Header';
 
 const Login = () => {
    const [IsSignInForm, setIsSignInForm] = useState(true);
    const[errormessage, seterrormessage] = useState<string | null>(null);
-   const navigate = useNavigate();
+    const navigate = useNavigate();
    const dispatch = useDispatch();
 
    const name = useRef<HTMLInputElement>(null);
@@ -28,40 +29,40 @@ const Login = () => {
         // Sign Up Logic 
         createUserWithEmailAndPassword(
           auth, 
-          email.current.value, 
-          password.current.value
+          email.current?.value || "", 
+          password.current?.value || ""
         )
           .then((userCredential) => {
           const user = userCredential.user;
-           if(!name.current) return ;
-
+          //  if(!name.current) return ;
+           
           updateProfile(user, {
-          displayName: name.current.value, 
+          displayName: name.current?.value || "", 
           photoURL: "https://lh3.google.com/u/0/ogw/AF2bZyhubAaFH8PS0A1rFN49QA4bepIuKZUhZmpNTeXSn5-IcA=s64-c-mo",
            })
            .then(() => {
-            const user = auth.currentUser
+             const user = auth.currentUser
             if(user){
             const {uid, email, displayName, photoURL}= user;
             dispatch(addUser({
-              uid: user.uid,
-              email: user.email,
-              displayName: name.current?.value,
+              uid: uid,
+              email: email,
+              displayName: displayName,
               photoURL: "https://lh3.google.com/u/0/ogw/AF2bZyhubAaFH8PS0A1rFN49QA4bepIuKZUhZmpNTeXSn5-IcA=s64-c-mo"
             }));
-            }
-            navigate("/browse");
+          }
+          // //   //  navigate("/browse");
           })
           .catch((error) => {
             // An error occurred
              seterrormessage(error.message);
           });
 
-          console.log("hooooooo",user);
+        //   // console.log("hooooooo",user);
           setIsSignInForm(true);
-          // navigate("/");
+        //   // navigate("/");
     
-        })
+         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
@@ -73,16 +74,16 @@ const Login = () => {
             // Sign in 
          signInWithEmailAndPassword(
           auth,  
-          email.current.value, 
-          password.current.value
+          email.current?.value || "", 
+          password.current?.value || ""
         )
-            .then((userCredential) => {
-        // Signed in 
-          const user = userCredential.user;
-          console.log("haaaaaaa",user);
-          navigate("/browse");
-        // ...
-      })
+      //       .then((userCredential) => {
+      //   // Signed in 
+      //     const user = userCredential.user;
+      //     // console.log("haaaaaaa",user);
+      //     // navigate("/browse");
+      //   // ...
+      // })
         .catch((error) => {
           const errorCode = error.code;
             const errorMessage = error.message;
