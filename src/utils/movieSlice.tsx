@@ -5,8 +5,9 @@ export interface Movie {
   overview: string;
   poster_path: string;
   backdrop_path: string;
-  vote_average: number;
-  release_date: string;
+  original_title: string;
+//   vote_average: number;
+//   release_date: string;
 }
 
 interface MovieState {
@@ -19,7 +20,7 @@ const movieSlice = createSlice({
     name: "movies",
     initialState,
     reducers: {
-        addNowPlayingMovies: (state,action: PayloadAction<Movie[]>) =>{
+        addNowPlayingMovies: (state, action: PayloadAction<Movie[]>) =>{
             state.nowPlayingMovies = action.payload;
         },
     },
