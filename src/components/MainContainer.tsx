@@ -6,11 +6,11 @@ import VideoBackground from "./VideoBackground";
 
 const MainContainer = () =>{
     const movies =useSelector((store:RootState) => store.movies?.nowPlayingMovies);
-    console.log("movies", movies);
+   
     if(!movies || movies.length===0) return null ;
 
     const mainMovies = movies[0];
-    console.log(mainMovies);
+    
 
     const {original_title, overview,id} = mainMovies;
      

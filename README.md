@@ -23,7 +23,8 @@
 -Fetch data for trialer video
 - Update store with trailer Video Data 
 - Embedded the Youtube Video and Make it Autoplay and Mute 
-- Tilwind classes to make container  look Awesome 
+- Tailwind classes to make container  look Awesome 
+- build Secondary Component
 
 
 # Features 
