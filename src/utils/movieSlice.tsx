@@ -1,20 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-export interface Movie {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string;
-  backdrop_path: string;
-  original_title: string;
-//   vote_average: number;
-//   release_date: string;
-}
+import { Video } from "./type";
+import { Movie } from "./type";
+
 
 interface MovieState {
   nowPlayingMovies: Movie[];
+  trailerVideo: Video | null;
 }
 const initialState: MovieState = {
-  nowPlayingMovies: []
+  nowPlayingMovies: [],
+  trailerVideo: null,
 };
 const movieSlice = createSlice({
     name: "movies",
@@ -23,10 +18,13 @@ const movieSlice = createSlice({
         addNowPlayingMovies: (state, action: PayloadAction<Movie[]>) =>{
             state.nowPlayingMovies = action.payload;
         },
-    },
+        addTrailerVideo: (state, action: PayloadAction<Video>) => {
+          state.trailerVideo = action.payload;
+        }
+    }
 
 });
 
-export const {addNowPlayingMovies} = movieSlice.actions;
+export const {addNowPlayingMovies,  addTrailerVideo } = movieSlice.actions;
 
 export default movieSlice.reducer;
