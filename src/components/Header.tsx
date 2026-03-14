@@ -8,7 +8,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../utils/firebase';
 import { useDispatch } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
-import { LOGO, USER_AVTAR } from "../utils/constants";
+import { LANG_SUPPORT, LOGO, USER_AVTAR } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
 
 
 const Header = () => {
@@ -55,6 +56,11 @@ const Header = () => {
     return () => unsubscribe();
   
      },[dispatch, navigate])
+
+     const handleGptSearchClick = ()=>{
+      //   toggle GPT Search
+           dispatch(toggleGptSearchView());
+     }
   
   return (
     <div className='absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between'>
@@ -63,10 +69,11 @@ const Header = () => {
        alt="logo"
        />
       <div className=' flex items-center gap-4 p-2 m-2'>
+        <button className="mx-2 my-4 px-4 py-2 bg-purple-700" onClick ={handleGptSearchClick}>GPT Search</button>
         <select className=" bg-black text-white border border-gray-400 px-4 py-2 rounded"
         >
-          <option value="English">English</option>
-          <option value="Hindi">हिन्दी</option>
+          {LANG_SUPPORT.map(lang => <option value={lang.identifier}>{lang.name}</option> )}
+          
         </select>
         {user?.uid && (
         <div className="flex p-2">
