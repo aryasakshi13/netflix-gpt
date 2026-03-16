@@ -1,11 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+
+export type Language = "en" | "hindi" | "spanish";
+
+interface langState{
+    lang: Language;
+}
+const initialState: langState = {
+  lang: "en",
+};
 const configSlice = createSlice({
   name : "config",
-  initialState : {
-    lang: "en",
-  },
+  initialState ,
    reducers: {
-      changeLanguage: (state, action) => {
+      changeLanguage: (state, action : PayloadAction<Language>) => {
            state.lang = action.payload;
       }
    }

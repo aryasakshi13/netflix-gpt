@@ -11,8 +11,6 @@ interface MovieListProps {
 }
 
 const MovieList = ({title, movies}: MovieListProps) => {
-    console.log("movie list render")
-    console.log("movie List in Secondary",movies);
   return (
     <div className="px-6">
         <h1 className="text-2xl py-4 text-white">{title}</h1>
@@ -29,4 +27,4 @@ const MovieList = ({title, movies}: MovieListProps) => {
   )
 }
 
-export default MovieList
+export default MovieList;
