@@ -69,26 +69,35 @@ const Header = () => {
      }
   
   return (
-    <div className='absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between'>
-      <img className='w-44' 
+    <div className='-mt-6 absolute top-0 left-0                w-full px-8 py-2 bg-gradient-to-b from-black z-50 flex  flex-col md:flex-row justify-between'>
+    {/* // <div className="-mt-6 absolute top-0 left-0 w-full px-8 py-4 flex items-center bg-linear-to-b from-black z-20 flex-col md:flex-row justify-between"> */}
+    {/* <div className="fixed top-0 left-0 w-full px-4 py-1.5 md:px-8 md:py-4 bg-gradient-to-b from-black/95 to-transparent z-50 flex items-center justify-between shadow-lg">   */}
+
+      
+      <img className='w-40 mx-auto md:mx-0' 
        src = {LOGO}
        alt="logo"
        />
-      <div className=' flex items-center gap-4 p-2 m-2'>
-        <button className="mx-2 my-4 px-4 py-2 bg-purple-700 rounded-lg" onClick ={handleGptSearchClick}>{showGptSearch ? "Home Page" : "GPT Search"}</button>
+      <div className='flex items-center gap-4'>
+        {/* <button className="mx-2 my-4 px-4 py-2 bg-purple-700 rounded-lg"  */}
         { showGptSearch && (
-        <select className=" bg-black text-white border border-gray-400 px-4 py-2 rounded-lg"
+        // <select className=" bg-black text-white border border-gray-400 px-4 py-2 rounded-lg"
+        <select 
+          className="bg-gray-900 hover:bg-gray-800 text-white m-2 h-8 flex justify-center items-center text-xs -mr-3 rounded-sm"
         onChange={handleLanguageChange}>
           {LANG_SUPPORT.map(lang => <option value={lang.identifier}>{lang.name}</option> )}
           
         </select>
        )}
-        {user?.uid && (
-        <div className="flex p-2">
+       <button className="w-16 h-8 py-2 px-4 m-2 my-2 bg-white text-black font-medium flex justify-center items-center -mr-1 rounded-sm text-xs"
+        onClick ={handleGptSearchClick}>{showGptSearch ? "Home Page" : "GPT Search"}
+        </button>
+        {/* {user?.uid && ( */}
+  
           <img className="w-12 h-12" alt="usericon" src ={user?.photoURL||USER_AVTAR}/>
         <button className='bg-red-500' onClick = {handleSignOut}>Sign Out</button>
-        </div>
-           ) }
+        
+           {/* ) } */}
       </div>
       
 

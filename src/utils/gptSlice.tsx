@@ -1,22 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { Movie } from "./type";
 
-interface GptState {
-  movieNames: string[] | null;
-  movieResults: any[] | null;
-  showGptSearch: boolean;
-}
+// interface GptState {
+//   movieNames: string[];
+//   movieResults: Movie[][];
+//   showGptSearch: boolean;
+// }
 
-const initialState: GptState = {
-   showGptSearch: false,
-  movieNames: null,
-  movieResults: null,
- 
-
-};
+// const initialState: GptState = {
+  
+// };
 
 const gptSlice = createSlice({
     name: 'gpt',
-    initialState,
+    initialState:{
+          showGptSearch: false,
+  movieNames: [],
+  movieResults: []
+ 
+    },
     reducers: {
         toggleGptSearchView :(state) =>{
             state.showGptSearch = !state.showGptSearch;
