@@ -69,7 +69,7 @@ const Header = () => {
      }
   
   return (
-    <div className='-mt-6 absolute top-0 left-0                w-full px-8 py-2 bg-gradient-to-b from-black z-50 flex  flex-col md:flex-row justify-between'>
+    <div className='absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-50 flex  flex-col md:flex-row justify-between'>
     {/* // <div className="-mt-6 absolute top-0 left-0 w-full px-8 py-4 flex items-center bg-linear-to-b from-black z-20 flex-col md:flex-row justify-between"> */}
     {/* <div className="fixed top-0 left-0 w-full px-4 py-1.5 md:px-8 md:py-4 bg-gradient-to-b from-black/95 to-transparent z-50 flex items-center justify-between shadow-lg">   */}
 
@@ -89,13 +89,13 @@ const Header = () => {
           
         </select>
        )}
-       <button className="w-16 h-8 py-2 px-4 m-2 my-2 bg-white text-black font-medium flex justify-center items-center -mr-1 rounded-sm text-xs"
+       <button className="w-16 h-8 py-4 px-8 m-2 my-2 bg-white text-black font-medium flex justify-center items-center -mr-1 rounded-lg text-xs"
         onClick ={handleGptSearchClick}>{showGptSearch ? "Home Page" : "GPT Search"}
         </button>
         {/* {user?.uid && ( */}
   
-          <img className="w-12 h-12" alt="usericon" src ={user?.photoURL||USER_AVTAR}/>
-        <button className='bg-red-500' onClick = {handleSignOut}>Sign Out</button>
+          <img className="w-12 h-12 ml-2 mr-2" alt="usericon" src ={user?.photoURL||USER_AVTAR}/>
+        <button className='bg-red-500 py-2 px-4 rounded-lg' onClick = {handleSignOut}>Sign Out</button>
         
            {/* ) } */}
       </div>

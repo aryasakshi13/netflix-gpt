@@ -17,7 +17,8 @@ const SecondaryContainer = () => {
     // </div>
     // )
      <div className="bg-black">
-      <div className="pt-32 mt-0 pb-8 md:-mt-52 pl-4 md:pl-12 relative z-10">
+      {/* <div className="pt-32 mt-0 pb-8 md:-mt-52 pl-4 md:pl-12 relative z-10"> */}
+      <div className=" mt-0 md:-mt-52 md:pl-12 relative z-20">
 
         {movies.nowPlayingMovies && (
           <MovieList title="Now Playing" movies={movies.nowPlayingMovies} />
